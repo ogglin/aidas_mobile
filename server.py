@@ -18,9 +18,10 @@ async def datetime_converter(o):
 
 
 async def classy_all(request):
+    site_id = request.rel_url.query['site_id']
+    classys = dbr.get_all_classy(site_id=site_id)
+    print(classys)
     try:
-        site_id = request.rel_url.query['site_id']
-        classys = dbr.get_all_classy(site_id=site_id)
         for classy in classys:
             dt = await datetime_converter(classy['created'])
             classy['created'] = dt
@@ -91,7 +92,7 @@ for route in list(app.router.routes()):
 
 
 def server_start():
-    web.run_app(app)
+    web.run_app(app, port=8888)
 
 
 if __name__ == '__main__':
