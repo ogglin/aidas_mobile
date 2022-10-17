@@ -20,7 +20,7 @@ async def datetime_converter(o):
 async def classy_all(request):
     site_id = request.rel_url.query['site_id']
     classys = dbr.get_all_classy(site_id=site_id)
-    print(classys)
+    print('classys', classys)
     try:
         for classy in classys:
             dt = await datetime_converter(classy['created'])

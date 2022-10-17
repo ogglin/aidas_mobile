@@ -4,7 +4,6 @@ from env import *
 
 
 def _query(sql):
-    # print(sql)
     result = []
     connection = pymysql.connect(host=DB_HOST,
                                  user=DB_USER,

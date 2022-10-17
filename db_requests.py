@@ -1,4 +1,4 @@
-from google_trans_new import google_translator
+from google_translate_new import google_translator
 
 from db import _query
 
@@ -47,4 +47,4 @@ def get_all_classy(site_id):
         ORDER BY case when services.id = 4 then 0 when services.id = 6 then 1 else 3 end, advertise.id DESC;"""
     res = _query(q)
     print(res)
-    return q
+    return res
