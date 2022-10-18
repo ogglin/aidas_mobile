@@ -8,7 +8,7 @@ import db_requests as dbr
 headers = {
     'Allow': 'GET, POST, HEAD, OPTIONS',
     'Content-Type': 'application/json',
-
+    'Access-Control-Allow-Origin': '*'
 }
 
 

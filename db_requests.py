@@ -29,22 +29,21 @@ def get_all_classy(site_id):
         template_ids = '(1, 2, 7)'
 
     tClassies = _query(f"""SELECT * FROM advertise WHERE advertise_template_id in {template_ids} 
-                AND newspaper_content_en is null and active = 1 and is_paid = 1 and end_issue >= {issue};""")
+                AND newspaper_content_en is null and is_paid = 1 and end_issue >= {issue};""")
     translator = google_translator()
     for tClassy in tClassies:
-        print(tClassy['newspaper_content'])
+        # print(tClassy['newspaper_content'])
         translate_text = translator.translate(tClassy['newspaper_content'], lang_tgt='en')
-        print(translate_text)
+        # print(translate_text)
         update_translate(int(tClassy['id']), translate_text.replace("'", '"'))
-    q = f"""SELECT advertise.id, advertise.categories_id, advertise.newspaper_content, 
-        advertise.newspaper_content_en, advertise.views, advertise.created, 
+    q = f"""SELECT advertise.id, advertise.categories_id, advertise.newspaper_content,
+        advertise.newspaper_content_en, advertise.views, advertise.created,
         GROUP_CONCAT('serv', services.id  SEPARATOR ' ') as services FROM advertise
         LEFT JOIN services_has_advertise sha ON sha.advertise_id = advertise.id
         LEFT JOIN services ON services.id = sha.services_id
-        WHERE advertise.active = 1 and advertise.advertise_template_id in {template_ids} 
-        and advertise.end_issue >= {issue} 
+        WHERE (advertise.is_paid = 1 or advertise.active = 1) and advertise.advertise_template_id in {template_ids}
+        and advertise.end_issue >= {issue}
         GROUP BY advertise.id
         ORDER BY case when services.id = 4 then 0 when services.id = 6 then 1 else 3 end, advertise.id DESC;"""
     res = _query(q)
-    print(res)
     return res
