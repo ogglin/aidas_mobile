@@ -1,4 +1,4 @@
-DB_HOST = '148.72.172.127'
+DB_HOST = 'core.emcns.us'
 DB_USER = 'core_api_any'
 DB_NAME = 'core'
 DB_PASS = 'timAnoch'
